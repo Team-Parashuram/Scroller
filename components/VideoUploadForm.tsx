@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { VideoTag } from '@/TempFiles/video.tag';
+import { VideoTag } from '@/Model/video.model';
 
 export default function VideoUploadForm() {
   const [title, setTitle] = useState('');
@@ -61,7 +61,6 @@ export default function VideoUploadForm() {
         videoUrl,
         thumbnailUrl,
         tags,
-        report: 0,
       });
       setTitle('');
       setDescription('');
@@ -70,7 +69,7 @@ export default function VideoUploadForm() {
       setTags([]);
       setUploadProgress(0);
     } catch (error) {
-      console.error(error);
+      // Error handled
     } finally {
       setLoading(false);
     }

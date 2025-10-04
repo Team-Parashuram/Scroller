@@ -3,11 +3,13 @@ import bcrypt from 'bcryptjs';
 
 export interface IUser {
   _id?: mongoose.Types.ObjectId;
-  reportedVideos?: mongoose.Types.ObjectId[];
-  password: string;
+  password?: string; // Optional for Clerk users
+  clerkId?: string; // Clerk user ID
   createdAt: Date;
   updatedAt: Date;
   email: string;
+  name?: string; // User's full name
+  imageUrl?: string; // Profile picture URL
 }
 
 const userSchema = new Schema<IUser>(
@@ -17,24 +19,35 @@ const userSchema = new Schema<IUser>(
       required: [true, 'Email is required'],
       unique: true,
       trim: true,
+      lowercase: true,
+    },
+    clerkId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows null values for backward compatibility
+    },
+    name: {
+      type: String,
+      trim: true,
+    },
+    imageUrl: {
+      type: String,
+      trim: true,
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
       trim: true,
+      // Not required anymore since Clerk handles auth
     },
-    reportedVideos: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Video',
-    }
   },
   {
     timestamps: true,
   },
 );
 
+// Only hash password if it exists (for legacy users)
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
+  if (this.password && this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
   next();

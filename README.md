@@ -6,7 +6,7 @@ Scroller provides the best scrolling experience with an algorithm designed to en
 
 ## 🛠 Tech Stack
 - **Frontend:** Next.js, TypeScript, ShadCN, DaisyUI
-- **Backend:** Next-Auth, bcryptjs, mongoose, MongoDB
+- **Backend:** Clerk, bcryptjs, mongoose, MongoDB
 - **Storage & Media:** ImageKit
 - **API & Testing:** Postman
 

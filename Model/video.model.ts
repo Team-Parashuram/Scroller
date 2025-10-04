@@ -40,7 +40,7 @@ export interface IVideo {
   videoUrl: string;
   tags: VideoTag[];
   title: string;
-  report: number;
+  report?: number;
 }
 
 const videoSchema = new mongoose.Schema<IVideo>(
@@ -72,10 +72,6 @@ const videoSchema = new mongoose.Schema<IVideo>(
     controls: {
       type: Boolean,
       default: true,
-    },
-    report: {
-      type: Number,
-      required: [true, 'Report is required'],
     },
     tags: {
       type: [String],

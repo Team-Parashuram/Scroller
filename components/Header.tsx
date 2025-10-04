@@ -1,96 +1,75 @@
 'use client';
 
 import { Upload, LogOut, Rocket, Menu, Loader2, Video, ChartAreaIcon } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
+import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useState } from 'react';
-import { toast } from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { data: session, status } = useSession();
-  const isLoading = status === 'loading';
-
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      toast.success('Successfully signed out!');
-    } catch (error) {
-      toast.error('Error signing out. Please try again.');
-      console.error('SignOut Error:', error);
-    }
-  };
+  const { isLoaded, user } = useUser();
 
   const NavigationLinks = ({ isMobile = false }) => (
     <div className={`flex ${isMobile ? 'flex-col items-start' : 'items-center'} gap-6`}>
-      {session ? (
-        <>
-          <Link
-            href="https://5-chan-shardendu-mishra.vercel.app/"
-            className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
-              ${isMobile ? 'w-full py-2' : ''}`}
-            onClick={() => isMobile && setIsMobileMenuOpen(false)}
-          >
-            <ChartAreaIcon className="h-4 w-4" />
-            <span>Chat Anonymously</span>
-          </Link>
-          <Link
-            href="/view"
-            className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
-              ${isMobile ? 'w-full py-2' : ''}`}
-            onClick={() => isMobile && setIsMobileMenuOpen(false)}
-          >
-            <Video className="h-4 w-4" />
-            <span>Watch Videos</span>
-          </Link>
-          <Link
-            href="/upload"
-            className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
-              ${isMobile ? 'w-full py-2' : ''}`}
-            onClick={() => isMobile && setIsMobileMenuOpen(false)}
-          >
-            <Upload className="h-4 w-4" />
-            <span>Upload</span>
-          </Link>
-          <Link
-            href="/ask-ai"
-            className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
-              ${isMobile ? 'w-full py-2' : ''}`}
-            onClick={() => isMobile && setIsMobileMenuOpen(false)}
-          >
-            <Rocket className="h-4 w-4" />
-            <span>Ask AI</span>
-          </Link>
-          {!isMobile && <div className="h-5 w-px bg-gray-700" />}
-          <div className={`text-gray-300 font-medium ${isMobile ? 'w-full py-2' : ''}`}>
-            {session.user?.email?.split('@')[0]}
-          </div>
-          <button
-            onClick={() => {
-              handleSignOut();
-              if (isMobile) {
-                setIsMobileMenuOpen(false);
-              }
-            }}
-            className={`flex items-center gap-2 text-red-400 hover:text-red-300 transition-colors font-medium
-              ${isMobile ? 'w-full py-2' : ''}`}
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Sign Out</span>
-          </button>
-        </>
-      ) : (
+      <SignedIn>
         <Link
-          href="/login"
+          href="https://5-chan-shardendu-mishra.vercel.app/"
           className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
             ${isMobile ? 'w-full py-2' : ''}`}
           onClick={() => isMobile && setIsMobileMenuOpen(false)}
         >
-          <span>Login</span>
+          <ChartAreaIcon className="h-4 w-4" />
+          <span>Chat Anonymously</span>
         </Link>
-      )}
+        <Link
+          href="/view"
+          className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
+            ${isMobile ? 'w-full py-2' : ''}`}
+          onClick={() => isMobile && setIsMobileMenuOpen(false)}
+        >
+          <Video className="h-4 w-4" />
+          <span>Watch Videos</span>
+        </Link>
+        <Link
+          href="/upload"
+          className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
+            ${isMobile ? 'w-full py-2' : ''}`}
+          onClick={() => isMobile && setIsMobileMenuOpen(false)}
+        >
+          <Upload className="h-4 w-4" />
+          <span>Upload</span>
+        </Link>
+        <Link
+          href="/ask-ai"
+          className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
+            ${isMobile ? 'w-full py-2' : ''}`}
+          onClick={() => isMobile && setIsMobileMenuOpen(false)}
+        >
+          <Rocket className="h-4 w-4" />
+          <span>Ask AI</span>
+        </Link>
+        {!isMobile && <div className="h-5 w-px bg-gray-700" />}
+        <div className={`${isMobile ? 'w-full py-2' : ''}`}>
+          <UserButton 
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "h-8 w-8"
+              }
+            }}
+          />
+        </div>
+      </SignedIn>
+      <SignedOut>
+        <SignInButton mode="modal">
+          <button className={`flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium
+            ${isMobile ? 'w-full py-2' : ''}`}>
+            <span>Login</span>
+          </button>
+        </SignInButton>
+      </SignedOut>
     </div>
   );
 
@@ -113,7 +92,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center">
-            {isLoading ? (
+            {!isLoaded ? (
               <Loader2 className="animate-spin h-5 w-5 text-gray-300" />
             ) : (
               <NavigationLinks />
@@ -134,7 +113,7 @@ const Header = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-64 bg-gray-900/95 border-gray-700 p-0">
                 <nav className="flex flex-col p-4">
-                  {!isLoading && <NavigationLinks isMobile={true} />}
+                  {isLoaded && <NavigationLinks isMobile={true} />}
                 </nav>
               </SheetContent>
             </Sheet>

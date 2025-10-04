@@ -105,7 +105,6 @@ const Chat = () => {
         },
       });
     } catch (error) {
-      console.error('Error fetching chat response:', error);
       const errorMessage = {
         id: Date.now(),
         type: 'ai' as const,

@@ -1,0 +1,5 @@
+ignoredBuiltDependencies:
+  - '@clerk/shared'
+  - '@vercel/speed-insights'
+  - sharp
+  - unrs-resolver

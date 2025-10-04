@@ -9,7 +9,6 @@ export async function GET() {
     }
     return sendResponse(200, 'API Key found', API_KEY);
   } catch (error) {
-    console.log(error);
     return sendResponse(500, 'Internal Server Error');
   }
 }

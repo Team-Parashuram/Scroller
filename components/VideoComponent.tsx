@@ -3,32 +3,16 @@ import { IKVideo } from 'imagekitio-next';
 import { IVideo } from '@/Model/video.model';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
-import { Trash2Icon, PlayCircle, ShieldAlertIcon } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { Trash2Icon, PlayCircle } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
 import toast from 'react-hot-toast';
 import { apiClient } from '@/lib/apiClient';
 
 export default function VideoComponent({ video }: { video: IVideo }) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const { data: session } = useSession();
+  const { user } = useUser();
   const videoRef = React.useRef<HTMLDivElement>(null);
-  // const [reportedVideo, setReportedVideo] = React.useState<string[] | null>(null);
-
-  // React.useEffect(() => {
-  //   const fetchReportedVideos = async () => {
-  //     try {
-  //       const response = await apiClient.getUsers();
-  //       console.log(response);
-  //       setReportedVideo((response as { data: string[] }).data);
-  //     } catch (error) {
-  //       console.error('Failed to get reported videos', error);
-  //     }
-  //   };
-  //   fetchReportedVideos();
-  // }, []);
-  
-  // const exist = video._id ? reportedVideo?.includes(video._id.toString()) : false;
 
   const handleDelete = async () => {
     try {
@@ -39,29 +23,14 @@ export default function VideoComponent({ video }: { video: IVideo }) {
         toast.error('Video ID is missing');
       }
     } catch (error) {
-      console.error('Failed to delete video', error);
       toast.error('Failed to delete video');
     }
   };
 
-  const canDelete = session && video.userId?.toString() === session.user.id && video._id;
+  const canDelete = user && video.userId?.toString() === user.id && video._id;
 
   const handleVideoPlay = () => {
     setIsPlaying(true);
-  };
-
-  const handleReport = async () => {
-    try {
-      if (video._id) {
-        await apiClient.reportVideo(video._id.toString());
-        toast.success('Video reported successfully');
-      } else {
-        toast.error('Video ID is missing');
-      }
-    } catch (error) {
-      console.error('Failed to report video', error);
-      toast.error('Failed to report video');
-    }
   };
 
   const handleVideoPause = () => {
@@ -73,16 +42,6 @@ export default function VideoComponent({ video }: { video: IVideo }) {
       className="group relative overflow-hidden bg-gray-900 border-gray-800/50 rounded-xl transition-all duration-300 w-full max-w-xs mx-auto"
       ref={videoRef}
     >
-      {/* {reportedVideo !== null && !exist && ( */}
-        <button
-          onClick={handleReport}
-          className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-gray-800/80 transition-colors"
-          aria-label="Report video"
-        >
-          <ShieldAlertIcon className="w-4 h-4 text-gray-300" />
-        </button>
-      {/* )} */}
-
       <div
         className="relative w-full"
         style={{ aspectRatio: '9/16', maxHeight: '360px' }}

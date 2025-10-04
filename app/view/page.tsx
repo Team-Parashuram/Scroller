@@ -18,14 +18,13 @@ export default function Home() {
         setIsLoading(true);
         setError(null);
         const res: any = await apiClient.getVideos();
-        console.log("Fetched Videos:", res.data);
         if (Array.isArray(res.data) && res.data.length > 0) {
           setVideos([...res.data, ...res.data, ...res.data]); // Tripling videos for smooth looping
         } else {
           setError('No videos available.');
         }
       } catch (error) {
-        console.error('Error fetching videos:', error); 
+        setError('Failed to load videos');
       } finally {
         setIsLoading(false);
       }

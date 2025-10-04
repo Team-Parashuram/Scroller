@@ -58,7 +58,6 @@ const NotFound = () => {
           throw new Error('Invalid API key response');
         }
       } catch (error) {
-        console.error('Error fetching API key:', error);
         setIsLoading(false);
       }
     };
@@ -90,11 +89,9 @@ const NotFound = () => {
           if (!Array.isArray(parsedFacts)) throw new Error('Invalid response format');
           setFactsResult({ success: true, data: parsedFacts });
         } catch (parseError) {
-          console.error('Error parsing facts:', parseError);
           setFactsResult({ success: false, error: 'Could not parse facts' });
         }
       } catch (error) {
-        console.error('Error fetching facts:', error);
         setFactsResult({ success: false, error: 'Failed to fetch facts' });
       } finally {
         setIsLoading(false);

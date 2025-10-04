@@ -1,34 +1,29 @@
 import { ConnectToDatabase } from '@/Database/connect.database';
-import { getServerSession } from 'next-auth';
+import { auth } from '@clerk/nextjs/server';
+import { syncClerkUserToMongoDB } from '@/lib/clerkSync';
 import { NextResponse } from 'next/server';
-import { authOptions } from '@/lib/auth';
-import User from '@/Model/user.model';
 
 export async function GET() {
   try {
-    // console.log('Checkpoint-1');
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ message: "Unauthorized" });
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    // console.log(session)
+
+    // Sync Clerk user to MongoDB
+    const mongoUser = await syncClerkUserToMongoDB();
+    
+    if (!mongoUser._id) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
 
     await ConnectToDatabase();
-    const id = session.user.id;
-    // console.log("ID: ",id)
-
-    const existUser = await User.findById(id)
-
-    const video = existUser.reportedVideos
     
-    return NextResponse.json(video);
+    return NextResponse.json({ user: mongoUser });
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { error: 'Authentication failed' },
-      {
-        status: 500,
-      },
+      { status: 500 }
     );
   }
 }

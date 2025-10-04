@@ -1,17 +1,24 @@
 import Video from '@/Model/video.model';
-import { authOptions } from '@/lib/auth';
-import { getServerSession } from 'next-auth';
+import { auth } from '@clerk/nextjs/server';
+import { syncClerkUserToMongoDB } from '@/lib/clerkSync';
 import { sendResponse } from '@/util/apiResponse';
 import { NextRequest, NextResponse } from 'next/server';
 import { ConnectToDatabase } from '@/Database/connect.database';
-import User from '@/Model/user.model';
 
 export async function PUT(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const { userId } = await auth();
+    if (!userId) {
       return sendResponse(401, 'Unauthorized');
     }
+
+    // Sync Clerk user to MongoDB
+    const mongoUser = await syncClerkUserToMongoDB();
+    
+    if (!mongoUser._id) {
+      return sendResponse(500, 'Failed to sync user');
+    }
+
     await ConnectToDatabase();
 
     const id = request.nextUrl.searchParams.get("id");
@@ -24,13 +31,9 @@ export async function PUT(request: NextRequest) {
       return sendResponse(404, "Video not found");
     }
 
-    const user = await User.findOne({ email: session.user.email });
-    if (!user) {
-      return sendResponse(404, "User not found");
-    }
-
-    user.reportedVideos = [...(user.reportedVideos || []), video._id];
-    await user.save();
+    // Add video to user's reported videos
+    mongoUser.reportedVideos = [...(mongoUser.reportedVideos || []), video._id];
+    await mongoUser.save();
 
     video.report = (video.report || 0) + 1;
     await video.save();
@@ -42,7 +45,6 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json(video);
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { error: 'Failed to report video' },
       { status: 500 }
@@ -53,11 +55,10 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const { userId } = await auth();
+    if (!userId) {
       return sendResponse(401, "Unauthorized");
     }
-    console.log(session)
 
     await ConnectToDatabase();
 
@@ -69,7 +70,6 @@ export async function DELETE(request: NextRequest) {
     await Video.findByIdAndDelete(id);
     return sendResponse(200, "Video deleted successfully");
   } catch (error) {
-    console.error(error);
     return sendResponse(500, "Internal Server Error");
   }
 }

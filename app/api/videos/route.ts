@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { ConnectToDatabase } from '@/Database/connect.database';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@clerk/nextjs/server';
+import { syncClerkUserToMongoDB } from '@/lib/clerkSync';
 import Video, { IVideo } from '@/Model/video.model';
 import { sendResponse } from '@/util/apiResponse';
-import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
@@ -16,21 +16,39 @@ export async function GET() {
     }
     return sendResponse(200, 'Videos found', videos);
   } catch (error) {
-    console.error(error);
     return sendResponse(500, 'Internal Server Error');
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return sendResponse(401, 'Unauthorized');
+    const { userId } = await auth();
+    if (!userId) {
+      return sendResponse(401, 'Unauthorized - Please sign in');
+    }
+
+    let mongoUser;
+    try {
+      mongoUser = await syncClerkUserToMongoDB();
+    } catch (syncError) {
+      return NextResponse.json(
+        { 
+          error: 'Failed to authenticate',
+          details: syncError instanceof Error ? syncError.message : 'Unknown error'
+        },
+        { status: 500 }
+      );
+    }
+    
+    if (!mongoUser._id) {
+      return sendResponse(500, 'Failed to sync user');
     }
 
     await ConnectToDatabase();
     const body: IVideo = await request.json();
-    body.userId = new mongoose.Types.ObjectId(session.user.id);
+    
+    // Use the MongoDB user ID for the video
+    body.userId = mongoUser._id;
 
     if (
       !body.title ||
@@ -51,15 +69,15 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    console.log("The Video Data is:",videoData);
-    const video = new Video(videoData);
-    await video.save();
+    const video = await Video.create(videoData);
 
     return NextResponse.json(video);
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
-      { error: 'Failed to create video' },
+      { 
+        error: 'Failed to create video',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 },
     );
   }
@@ -67,11 +85,10 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const { userId } = await auth();
+    if (!userId) {
       return sendResponse(401, "Unauthorized");
     }
-    console.log(session)
 
     await ConnectToDatabase();
 
@@ -83,7 +100,6 @@ export async function DELETE(request: NextRequest) {
     await Video.findByIdAndDelete(id);
     return sendResponse(200, "Video deleted successfully");
   } catch (error) {
-    console.error(error);
     return sendResponse(500, "Internal Server Error");
   }
 }

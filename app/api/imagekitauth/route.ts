@@ -1,24 +1,37 @@
 import { NextResponse } from 'next/server';
 import ImageKit from 'imagekit';
 
-const imagekit = new ImageKit({
-  publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-  urlEndpoint: process.env.NEXT_PUBLIC_URL_ENDPOINT!,
-});
-
 export async function GET() {
   try {
-    console.log('Checkpoint-1');
+    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
+    const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+    const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
+
+    if (!publicKey || !privateKey || !urlEndpoint) {
+      return NextResponse.json(
+        { 
+          error: 'ImageKit credentials not configured',
+          details: 'Missing environment variables'
+        },
+        { status: 500 }
+      );
+    }
+
+    const imagekit = new ImageKit({
+      publicKey,
+      privateKey,
+      urlEndpoint,
+    });
+
     const authenticationParameters = imagekit.getAuthenticationParameters();
     return NextResponse.json(authenticationParameters);
   } catch (error) {
-    console.error('ImageKit authentication error:', error);
     return NextResponse.json(
-      { error: 'Authentication failed' },
-      {
-        status: 500,
+      { 
+        error: 'Authentication failed',
+        details: error instanceof Error ? error.message : 'Unknown error'
       },
+      { status: 500 }
     );
   }
 }

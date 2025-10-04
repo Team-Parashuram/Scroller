@@ -54,12 +54,6 @@ class ApiClient {
       body: videoData,
     });
   }
-
-    async reportVideo(id: string) {
-    return this.fetch(`/report?id=${id}`, {
-      method: 'PUT',
-    });
-  }
 }
 
 export const apiClient = new ApiClient();
