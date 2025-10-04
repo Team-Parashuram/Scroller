@@ -68,8 +68,8 @@ export default function VideoUploadForm() {
       setThumbnailUrl('');
       setTags([]);
       setUploadProgress(0);
-    } catch (error) {
-      // Error handled
+    } catch {
+      // Error handled - already shown by apiClient
     } finally {
       setLoading(false);
     }

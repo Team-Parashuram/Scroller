@@ -2,6 +2,9 @@
 
 import { SignUp } from '@clerk/nextjs';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const Page = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-indigo-950">

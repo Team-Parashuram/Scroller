@@ -26,7 +26,7 @@ export default function Home() {
         const res = await apiClient.getVideos() as { data: any[] };
         setVideos(res.data);
         setTotalPages(Math.ceil(res.data.length / VIDEOS_PER_PAGE));
-      } catch (error) {
+      } catch {
         setError('Failed to load videos');
       } finally {
         setIsLoading(false);

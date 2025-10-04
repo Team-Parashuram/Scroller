@@ -14,8 +14,8 @@ export default function DeleteButton({ id }: DeleteButtonProps) {
     try {
       await apiClient.deleteVideo(id)
       toast.success('Video deleted Successfully')
-    } catch (error) {
-      // Error handled
+    } catch {
+      toast.error('Failed to delete video')
     }
   }
 

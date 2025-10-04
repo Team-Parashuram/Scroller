@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { ConnectToDatabase } from '@/Database/connect.database';
 import { auth } from '@clerk/nextjs/server';
 import { syncClerkUserToMongoDB } from '@/lib/clerkSync';
@@ -15,7 +14,7 @@ export async function GET() {
       return sendResponse(404, 'No videos found');
     }
     return sendResponse(200, 'Videos found', videos);
-  } catch (error) {
+  } catch {
     return sendResponse(500, 'Internal Server Error');
   }
 }
@@ -72,11 +71,11 @@ export async function POST(request: NextRequest) {
     const video = await Video.create(videoData);
 
     return NextResponse.json(video);
-  } catch (error) {
+  } catch (createError) {
     return NextResponse.json(
       { 
         error: 'Failed to create video',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: createError instanceof Error ? createError.message : 'Unknown error'
       },
       { status: 500 },
     );
@@ -99,7 +98,7 @@ export async function DELETE(request: NextRequest) {
 
     await Video.findByIdAndDelete(id);
     return sendResponse(200, "Video deleted successfully");
-  } catch (error) {
+  } catch {
     return sendResponse(500, "Internal Server Error");
   }
 }

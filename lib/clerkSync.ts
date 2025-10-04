@@ -1,6 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { ConnectToDatabase } from '@/Database/connect.database';
-import User, { IUser } from '@/Model/user.model';
+import User from '@/Model/user.model';
 
 /**
  * Syncs or creates a user in MongoDB from Clerk authentication

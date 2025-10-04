@@ -44,7 +44,7 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json(video);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to report video' },
       { status: 500 }
@@ -69,7 +69,7 @@ export async function DELETE(request: NextRequest) {
 
     await Video.findByIdAndDelete(id);
     return sendResponse(200, "Video deleted successfully");
-  } catch (error) {
+  } catch {
     return sendResponse(500, "Internal Server Error");
   }
 }

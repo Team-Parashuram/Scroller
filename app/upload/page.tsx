@@ -10,6 +10,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function VideoUploadPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-indigo-950 flex flex-col">

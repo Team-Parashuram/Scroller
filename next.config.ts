@@ -14,6 +14,17 @@ const nextConfig: import('next').NextConfig = {
       },
     ],
   },
+  // Skip build-time validation when using placeholder keys
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+  // Force dynamic rendering for auth-protected pages
+  experimental: {
+    
+  },
 };
 
 export default nextConfig;

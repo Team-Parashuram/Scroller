@@ -1,6 +1,6 @@
 'use client';
 
-import { Upload, LogOut, Rocket, Menu, Loader2, Video, ChartAreaIcon } from 'lucide-react';
+import { Upload, Rocket, Menu, Loader2, Video, ChartAreaIcon } from 'lucide-react';
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isLoaded, user } = useUser();
+  const { isLoaded } = useUser();
 
   const NavigationLinks = ({ isMobile = false }) => (
     <div className={`flex ${isMobile ? 'flex-col items-start' : 'items-center'} gap-6`}>

@@ -57,7 +57,7 @@ const NotFound = () => {
         } else {
           throw new Error('Invalid API key response');
         }
-      } catch (error) {
+      } catch {
         setIsLoading(false);
       }
     };
@@ -88,10 +88,10 @@ const NotFound = () => {
           const parsedFacts = JSON.parse(responseText);
           if (!Array.isArray(parsedFacts)) throw new Error('Invalid response format');
           setFactsResult({ success: true, data: parsedFacts });
-        } catch (parseError) {
+        } catch {
           setFactsResult({ success: false, error: 'Could not parse facts' });
         }
-      } catch (error) {
+      } catch {
         setFactsResult({ success: false, error: 'Failed to fetch facts' });
       } finally {
         setIsLoading(false);

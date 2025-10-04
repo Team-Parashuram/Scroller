@@ -12,7 +12,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       const res = await fetch('/api/imagekitauth');
 
       if (!res.ok) {
-        const errorData = await res.json();
         throw new Error('Failed to authenticate with ImageKit');
       }
       

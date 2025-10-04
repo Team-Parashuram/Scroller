@@ -20,7 +20,7 @@ export async function GET() {
     await ConnectToDatabase();
     
     return NextResponse.json({ user: mongoUser });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Authentication failed' },
       { status: 500 }

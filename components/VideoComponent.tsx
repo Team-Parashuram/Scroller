@@ -22,7 +22,7 @@ export default function VideoComponent({ video }: { video: IVideo }) {
       } else {
         toast.error('Video ID is missing');
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete video');
     }
   };

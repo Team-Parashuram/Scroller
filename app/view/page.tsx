@@ -23,7 +23,7 @@ export default function Home() {
         } else {
           setError('No videos available.');
         }
-      } catch (error) {
+      } catch {
         setError('Failed to load videos');
       } finally {
         setIsLoading(false);
