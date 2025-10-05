@@ -273,5 +273,5 @@ For support, email your support address or open an issue in the GitHub repositor
 ---
 
 <div align="center">
-  <strong>Built by Team Parashuram</strong>
+  <strong>Built by Shardendu Mishra - Team Parashuram</strong>
 </div>
