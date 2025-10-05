@@ -50,9 +50,10 @@ const NotFound = () => {
   useEffect(() => {
     const fetchAPIKey = async () => {
       try {
-        const res = await apiRequest.get('/ai');
-        if (res.status === 200 && res.data?.data) {
-          apiKeyRef.current = res.data.data;
+        const res = await fetch('/api/ai');
+        const data = await res.json();
+        if (res.ok && data?.data) {
+          apiKeyRef.current = data.data;
           fetchFacts();
         } else {
           throw new Error('Invalid API key response');

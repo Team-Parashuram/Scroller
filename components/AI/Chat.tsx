@@ -40,10 +40,18 @@ const Chat = () => {
       try {
         setInitializing(true);
         setInitError(null);
-        const res = await apiRequest.get('/ai');
         
-        if (res.status === 200 && res.data.data) {
-          if (res.data.data === 'placeholder_api_key') {
+        // Use correct API route path
+        const res = await fetch('/api/ai');
+        
+        if (!res.ok) {
+          throw new Error(`API request failed with status ${res.status}`);
+        }
+        
+        const data = await res.json();
+        
+        if (data.status === 200 && data.data) {
+          if (data.data === 'placeholder_api_key') {
             setInitError('Gemini API key not configured. Please add a valid GEMINI_API_KEY to your .env.local file.');
             toast.error('AI service not configured', {
               duration: 5000,
@@ -52,7 +60,7 @@ const Chat = () => {
             return;
           }
           
-          apiKeyRef.current = res.data.data;
+          apiKeyRef.current = data.data;
           const newGenAI = new GoogleGenerativeAI(apiKeyRef.current);
           setGenAI(newGenAI);
           setModel(newGenAI.getGenerativeModel({ model: 'gemini-2.0-flash' }));
@@ -64,7 +72,7 @@ const Chat = () => {
         }
       } catch (error) {
         console.error('Failed to initialize AI:', error);
-        setInitError('Failed to initialize AI service. Please check your network connection.');
+        setInitError(`Failed to initialize AI service: ${error instanceof Error ? error.message : 'Unknown error'}`);
         toast.error('Failed to connect to AI service', {
           duration: 5000,
           icon: <CircleX />,

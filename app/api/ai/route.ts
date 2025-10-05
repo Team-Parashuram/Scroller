@@ -1,14 +1,24 @@
-import { sendResponse } from '@/util/apiResponse';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
     const API_KEY = process.env.GEMINI_API_KEY;
 
     if (!API_KEY) {
-      return sendResponse(500, 'API Key not found');
+      return NextResponse.json(
+        { status: 500, message: 'API Key not found', data: null },
+        { status: 500 }
+      );
     }
-    return sendResponse(200, 'API Key found', API_KEY);
+    
+    return NextResponse.json(
+      { status: 200, message: 'API Key found', data: API_KEY },
+      { status: 200 }
+    );
   } catch {
-    return sendResponse(500, 'Internal Server Error');
+    return NextResponse.json(
+      { status: 500, message: 'Internal Server Error', data: null },
+      { status: 500 }
+    );
   }
 }
