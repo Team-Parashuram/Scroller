@@ -91,10 +91,6 @@ export default function Home() {
       <div className="min-h-screen bg-background">
         <main className="container mx-auto px-4 py-8">
           <section className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              Live Platform
-            </div>
             <h1 className="mb-6 text-4xl font-bold tracking-tight gradient-text md:text-5xl lg:text-6xl">
               Discover Amazing Videos
             </h1>

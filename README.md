@@ -11,6 +11,8 @@
 
 **GitHub Repository**: [https://github.com/Team-Parashuram/Scroller](https://github.com/Team-Parashuram/Scroller)
 
+**Live Demo Video**: [Watch on YouTube](https://www.youtube.com/watch?v=eItfWL08lO4)
+
 ## Overview
 
 **Scroller** is a TikTok-style video sharing platform that enables users to upload, share, and discover short-form video content. With a sleek black and yellow professional design, it offers a modern, engaging experience similar to popular social media platforms.
