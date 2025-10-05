@@ -39,7 +39,7 @@ export default function VideoComponent({ video }: { video: IVideo }) {
 
   return (
     <Card
-      className="group relative overflow-hidden bg-gray-900 border-gray-800/50 rounded-xl transition-all duration-300 w-full max-w-xs mx-auto"
+      className="group relative overflow-hidden glass-card border-border/50 rounded-xl transition-all duration-300 w-full max-w-xs mx-auto hover-lift"
       ref={videoRef}
     >
       <div
@@ -48,9 +48,9 @@ export default function VideoComponent({ video }: { video: IVideo }) {
       >
         <div className="relative w-full h-full rounded-t-lg overflow-hidden">
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-900/80">
-              <Skeleton className="w-full h-full bg-gray-800/50 animate-pulse" />
-              <PlayCircle className="absolute w-12 h-12 text-purple-400/50 animate-pulse" />
+            <div className="absolute inset-0 flex items-center justify-center bg-background/80">
+              <Skeleton className="w-full h-full bg-muted/50 animate-pulse" />
+              <PlayCircle className="absolute w-12 h-12 text-primary/50 animate-pulse" />
             </div>
           )}
 
@@ -72,20 +72,20 @@ export default function VideoComponent({ video }: { video: IVideo }) {
           </div>
 
           <div
-            className={`absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent opacity-0 transition-opacity duration-300 pointer-events-none ${
+            className={`absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-0 transition-opacity duration-300 pointer-events-none ${
               isPlaying ? 'opacity-0' : ''
             }`}
           />
         </div>
       </div>
 
-      <CardContent className="relative p-4 bg-gradient-to-b from-gray-900/0 to-gray-900/80">
+      <CardContent className="relative p-4 bg-gradient-to-b from-card/0 to-card/80">
         <div className="flex justify-between items-start gap-3">
-          <div className="flex-1 transform transition-transform duration-300 ">
-            <h2 className="text-base font-semibold text-white line-clamp-1 transition-colors ">
+          <div className="flex-1 transform transition-transform duration-300">
+            <h2 className="text-base font-semibold text-foreground line-clamp-1 transition-colors">
               {video.title}
             </h2>
-            <p className="mt-2 text-sm text-gray-400 line-clamp-2 transition-colors ">
+            <p className="mt-2 text-sm text-muted-foreground line-clamp-2 transition-colors">
               {video.description}
             </p>
           </div>
@@ -93,19 +93,19 @@ export default function VideoComponent({ video }: { video: IVideo }) {
           {canDelete && (
             <button
               onClick={handleDelete}
-              className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-destructive/10 hover:bg-destructive/20 border border-destructive/20 hover:border-destructive/40 transition-all duration-300"
               aria-label="Delete video"
             >
-              <Trash2Icon className="w-4 h-4 transition-colors duration-300" />
+              <Trash2Icon className="w-4 h-4 text-destructive transition-colors duration-300" />
             </button>
           )}
         </div>
       </CardContent>
 
       {!isPlaying && !isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
-          <div className="bg-black/30 p-4 rounded-full">
-            <PlayCircle className="w-16 h-16 text-purple-400/80" />
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div className="bg-primary/10 backdrop-blur-sm p-4 rounded-full border border-primary/20">
+            <PlayCircle className="w-16 h-16 text-primary/80" />
           </div>
         </div>
       )}

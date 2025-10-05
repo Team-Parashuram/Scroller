@@ -1,108 +1,190 @@
+/* Professional Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-feature-settings: 'cv05', 'cv02', 'cv03', 'cv04';
+  font-variant-numeric: oldstyle-nums;
 }
 
+/* Professional Black & Yellow Color Scheme */
 @layer base {
   :root {
-    --background: 250 40% 98%;
-    --foreground: 255 15% 20%;
-    --card: 250 40% 100%;
-    --card-foreground: 255 15% 20%;
-    --popover: 250 40% 100%;
-    --popover-foreground: 255 15% 20%;
+    /* Light theme colors */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
 
-    --primary: 270 70% 55%;
-    --primary-foreground: 0 0% 100%;
+    /* Professional Yellow Primary */
+    --primary: 45 96% 53%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 260 50% 45%;
-    --secondary-foreground: 0 0% 100%;
+    /* Elegant Secondary */
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 250 40% 90%;
-    --muted-foreground: 255 15% 45%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
 
-    --accent: 280 60% 60%;
-    --accent-foreground: 0 0% 100%;
+    /* Bright Yellow Accent */
+    --accent: 48 100% 67%;
+    --accent-foreground: 0 0% 9%;
 
-    --destructive: 350 70% 55%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 255 20% 85%;
-    --input: 255 20% 85%;
-    --ring: 270 70% 60%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 45 96% 53%;
 
-    --chart-1: 270 70% 55%;
-    --chart-2: 280 60% 50%;
-    --chart-3: 260 50% 45%;
-    --chart-4: 250 60% 50%;
-    --chart-5: 290 50% 55%;
+    /* Professional Chart Colors */
+    --chart-1: 45 96% 53%;
+    --chart-2: 48 100% 67%;
+    --chart-3: 42 87% 55%;
+    --chart-4: 43 74% 49%;
+    --chart-5: 47 80% 58%;
 
     --radius: 0.75rem;
-    --sidebar-background: 250 40% 95%;
-    --sidebar-foreground: 255 15% 20%;
-    --sidebar-primary: 270 70% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 280 60% 60%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 255 20% 85%;
-    --sidebar-ring: 270 70% 60%;
+    
+    /* Sidebar Colors */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 3.9%;
+    --sidebar-primary: 45 96% 53%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 48 100% 67%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 89.8%;
+    --sidebar-ring: 45 96% 53%;
   }
 }
 
 @layer base {
   .dark {
-    --background: 280 30% 8%;
-    --foreground: 250 30% 98%;
+    /* Professional Dark Mode with Black & Yellow */
+    --background: 0 0% 3.9%;
+    --foreground: 45 23% 95%;
 
-    --card: 280 30% 12%;
-    --card-foreground: 250 30% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 45 23% 95%;
 
-    --popover: 280 30% 12%;
-    --popover-foreground: 250 30% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 45 23% 95%;
 
-    --primary: 270 85% 65%;
-    --primary-foreground: 0 0% 100%;
+    /* Vibrant Yellow Primary for Dark Mode */
+    --primary: 45 96% 53%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 280 75% 60%;
-    --secondary-foreground: 0 0% 100%;
+    /* Sophisticated Secondary */
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 45 23% 95%;
 
-    --muted: 280 30% 15%;
-    --muted-foreground: 250 30% 85%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
 
-    --accent: 280 75% 60%;
-    --accent-foreground: 0 0% 100%;
+    /* Bright Yellow Accent */
+    --accent: 48 100% 67%;
+    --accent-foreground: 0 0% 9%;
 
-    --destructive: 350 75% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 45 23% 95%;
 
-    --border: 280 30% 20%;
-    --input: 280 30% 20%;
-    --ring: 270 85% 70%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 45 96% 53%;
 
-    --chart-1: 270 85% 65%;
-    --chart-2: 280 75% 60%;
-    --chart-3: 260 65% 55%;
-    --chart-4: 250 75% 60%;
-    --chart-5: 290 65% 65%;
+    /* Professional Dark Chart Colors */
+    --chart-1: 45 96% 53%;
+    --chart-2: 48 100% 67%;
+    --chart-3: 42 87% 55%;
+    --chart-4: 43 74% 49%;
+    --chart-5: 47 80% 58%;
 
-    --sidebar-background: 280 30% 8%;
-    --sidebar-foreground: 250 30% 98%;
-    --sidebar-primary: 270 85% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 280 75% 60%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 280 30% 20%;
-    --sidebar-ring: 270 85% 70%;
+    /* Dark Sidebar */
+    --sidebar-background: 0 0% 3.9%;
+    --sidebar-foreground: 45 23% 95%;
+    --sidebar-primary: 45 96% 53%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 48 100% 67%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 14.9%;
+    --sidebar-ring: 45 96% 53%;
   }
 }
 
+/* Professional Utility Classes */
+@layer components {
+  .glass-effect {
+    @apply bg-black/20 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50 shadow-2xl;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  .gradient-border {
+    @apply border border-transparent bg-gradient-to-r from-primary to-accent bg-clip-border;
+  }
+  
+  .professional-shadow {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 193, 7, 0.05);
+  }
+  
+  .dark .professional-shadow {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.4),
+      0 2px 4px -1px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 193, 7, 0.1);
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1 scale-[1.02] professional-shadow;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 
+           border-0 font-semibold px-6 py-3 rounded-lg
+           transition-all duration-200 ease-in-out
+           hover:shadow-lg hover:-translate-y-0.5
+           focus:ring-2 focus:ring-primary/20 focus:outline-none;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80
+           border border-border font-medium px-6 py-3 rounded-lg
+           transition-all duration-200 ease-in-out
+           hover:shadow-md hover:-translate-y-0.5
+           focus:ring-2 focus:ring-secondary/20 focus:outline-none;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Professional Animations */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -110,22 +192,169 @@ body {
   }
 }
 
-.fade-in {
-  animation: fade-in 0.5s ease-out;
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.6s ease-out;
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+.scale-in {
+  animation: scale-in 0.4s ease-out;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+/* Professional Scrollbar */
 ::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 4px;
+  border: 2px solid hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary)/0.8);
 }
 
 html {
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary)) hsl(var(--muted));
 }
 
-* {
+/* Hide scrollbar for specific elements */
+.scrollbar-hide {
   -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Professional Typography */
+.text-display {
+  @apply text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight;
+}
+
+.text-headline {
+  @apply text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight;
+}
+
+.text-title {
+  @apply text-xl lg:text-2xl xl:text-3xl font-semibold tracking-tight;
+}
+
+.text-body {
+  @apply text-base lg:text-lg leading-relaxed;
+}
+
+.text-caption {
+  @apply text-sm text-muted-foreground;
+}
+
+/* Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 focus:ring-offset-background;
+}
+
+/* Selection Styling */
+::selection {
+  background-color: hsl(var(--primary)/0.2);
+  color: hsl(var(--primary-foreground));
+}
+
+/* Video Container Styling */
+.video-container {
+  @apply relative overflow-hidden rounded-xl bg-card border border-border/50;
+}
+
+.video-container::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none z-10;
+}
+
+/* Professional Loading States */
+.skeleton-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }

@@ -192,63 +192,75 @@ const Chat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-indigo-950">
+    <div className="min-h-screen bg-background">
       <Header />
-      <div className="max-w-xl mx-auto pt-8 p-4">
-        <Card className="bg-black/40 backdrop-blur-sm border-purple-900/50 shadow-2xl">
-          <CardHeader className="border-b border-purple-900/30 flex flex-row items-center justify-between bg-black/60">
-            <div className="flex items-center space-x-2">
-              <MessageCircle className="text-purple-400" />
-              <CardTitle className="text-purple-200">Scroller AI</CardTitle>
-            </div>
-            {chat.length > 0 && !initializing && !initError && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearChat}
-                className="text-purple-300 hover:text-purple-100 hover:bg-purple-900/30"
-              >
-                Clear Chat
-              </Button>
-            )}
-          </CardHeader>
-          <CardContent className="p-4">
-            {initializing ? (
-              <div className="h-[400px] flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <Loader2 className="h-8 w-8 animate-spin text-purple-400 mx-auto" />
-                  <p className="text-purple-300">Initializing AI service...</p>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-headline gradient-text mb-4">AI Assistant</h1>
+            <p className="text-muted-foreground">
+              Get instant help and answers from our intelligent AI assistant
+            </p>
+          </div>
+          
+          <Card className="glass-card border-border/50">
+            <CardHeader className="border-b border-border/30 flex flex-row items-center justify-between bg-card/50">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <MessageCircle className="text-primary w-5 h-5" />
                 </div>
+                <CardTitle className="text-foreground text-xl">Scroller AI</CardTitle>
               </div>
-            ) : initError ? (
-              <div className="h-[400px] flex items-center justify-center">
-                <div className="text-center space-y-4 p-6">
-                  <CircleX className="h-12 w-12 text-red-400 mx-auto" />
-                  <div className="space-y-2">
-                    <p className="text-red-300 font-semibold">AI Service Error</p>
-                    <p className="text-purple-300 text-sm max-w-md">{initError}</p>
-                    <Button
-                      onClick={() => window.location.reload()}
-                      className="mt-4 bg-purple-900/80 hover:bg-purple-800 text-purple-200"
-                    >
-                      Retry
-                    </Button>
+              {chat.length > 0 && !initializing && !initError && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearChat}
+                  className="text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                >
+                  Clear Chat
+                </Button>
+              )}
+            </CardHeader>
+            <CardContent className="p-6">
+              {initializing ? (
+                <div className="h-[400px] flex items-center justify-center">
+                  <div className="text-center space-y-4">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
+                    <p className="text-muted-foreground">Initializing AI service...</p>
                   </div>
                 </div>
-              </div>
+              ) : initError ? (
+                <div className="h-[400px] flex items-center justify-center">
+                  <div className="text-center space-y-4 p-6">
+                    <CircleX className="h-12 w-12 text-destructive mx-auto" />
+                    <div className="space-y-2">
+                      <p className="text-destructive font-semibold">AI Service Error</p>
+                      <p className="text-muted-foreground text-sm max-w-md">{initError}</p>
+                      <Button
+                        onClick={() => window.location.reload()}
+                        className="mt-4 bg-primary hover:bg-primary/90 text-primary-foreground"
+                      >
+                        Retry
+                      </Button>
+                    </div>
+                  </div>
+                </div>
             ) : (
               <>
                 <div
                   ref={scrollRef}
-                  className="h-[400px] overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-track-purple-900/20 scrollbar-thumb-purple-600/50"
+                  className="h-[400px] overflow-y-auto pr-2 space-y-4"
                 >
                   {chat.length === 0 && (
                     <div className="h-full flex items-center justify-center">
                       <div className="text-center space-y-4 p-6">
-                        <Bot className="h-12 w-12 text-purple-400 mx-auto" />
+                        <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <Bot className="h-8 w-8 text-primary" />
+                        </div>
                         <div className="space-y-2">
-                          <p className="text-purple-300 font-semibold">Welcome to Scroller AI</p>
-                          <p className="text-purple-400/70 text-sm max-w-md">
+                          <p className="text-foreground font-semibold">Welcome to Scroller AI</p>
+                          <p className="text-muted-foreground text-sm max-w-md">
                             Ask me anything about social media wellness, productivity, or general questions!
                           </p>
                         </div>
@@ -268,40 +280,44 @@ const Chat = () => {
                         } space-x-2`}
                       >
                         {item.type === 'ai' && (
-                          <Bot className="text-purple-400 h-5 w-5" />
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                            <Bot className="text-primary h-4 w-4" />
+                          </div>
                         )}
                         <div
                           className={`
                             p-3 rounded-xl max-w-[80%] shadow-sm
                             ${
                               item.type === 'user'
-                                ? 'bg-purple-900/30 text-purple-200'
-                                : 'bg-black/60 text-purple-300'
+                                ? 'bg-primary/10 border border-primary/20 text-foreground'
+                                : 'bg-card border border-border/50 text-foreground'
                             }
                           `}
                         >
                           {item.message}
                         </div>
                         {item.type === 'user' && (
-                          <UserCircle className="text-purple-400 h-5 w-5" />
+                          <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                            <UserCircle className="text-accent h-4 w-4" />
+                          </div>
                         )}
                       </motion.div>
                     ))}
                   </AnimatePresence>
                 </div>
-                <div className="mt-4 flex space-x-2">
+                <div className="mt-6 flex space-x-2">
                   <Input
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Ask about social media wellness..."
                     disabled={loading || !model}
-                    className="flex-grow bg-black/60 border-purple-900/30 text-purple-200 placeholder-purple-400/50 focus:border-purple-500"
+                    className="flex-grow bg-background border-border focus:border-primary"
                   />
                   <Button
                     onClick={handleSubmit}
                     disabled={loading || !prompt.trim() || !model}
-                    className="bg-purple-900/80 hover:bg-purple-800 text-purple-200 disabled:opacity-50"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
                   >
                     {loading ? (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -315,6 +331,7 @@ const Chat = () => {
             )}
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Home, Lightbulb, Stars, Rocket, RefreshCcw } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import apiRequest from '@/util/apiRequest';
 import Header from '@/components/Header';
 
 const FACTS_PROMPT = 'Write 10 distinct facts about Social Media and Social Media well-being, formatted as an array of sentences. Each sentence should be a separate fact. Give them in the format of ["this is fact one", "this is fact two",] like this don\'t write anything else.';

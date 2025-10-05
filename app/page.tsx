@@ -52,7 +52,7 @@ export default function Home() {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center gap-1 px-4 py-2 rounded-lg bg-black/40 text-purple-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-900/30 transition-colors border border-purple-900/30"
+        className="flex items-center gap-1 px-4 py-2 rounded-lg bg-card/40 text-foreground disabled:opacity-50 disabled:cursor-not-allowed hover:bg-accent/50 transition-colors border border-border/50"
       >
         <ChevronLeft className="w-4 h-4" />
         Previous
@@ -65,8 +65,8 @@ export default function Home() {
             onClick={() => handlePageChange(pageNum)}
             className={`w-10 h-10 rounded-lg transition-colors border ${
               currentPage === pageNum
-                ? 'bg-purple-900/60 text-purple-200 border-purple-700/50'
-                : 'bg-black/40 text-purple-300 border-purple-900/30 hover:bg-purple-900/30'
+                ? 'bg-primary text-primary-foreground border-primary/50'
+                : 'bg-card/40 text-foreground border-border/50 hover:bg-accent/50'
             }`}
           >
             {pageNum}
@@ -77,7 +77,7 @@ export default function Home() {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center gap-1 px-4 py-2 rounded-lg bg-black/40 text-purple-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-900/30 transition-colors border border-purple-900/30"
+        className="flex items-center gap-1 px-4 py-2 rounded-lg bg-card/40 text-foreground disabled:opacity-50 disabled:cursor-not-allowed hover:bg-accent/50 transition-colors border border-border/50"
       >
         Next
         <ChevronRight className="w-4 h-4" />
@@ -88,27 +88,34 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-black to-indigo-950">
+      <div className="min-h-screen bg-background">
         <main className="container mx-auto px-4 py-8">
-          <section className="mb-8 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight text-purple-200 md:text-5xl lg:text-6xl">
+          <section className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm mb-6">
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              Live Platform
+            </div>
+            <h1 className="mb-6 text-4xl font-bold tracking-tight gradient-text md:text-5xl lg:text-6xl">
               Discover Amazing Videos
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-purple-300">
-              Explore a universe of creative content shared by our community
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              Explore a universe of creative content shared by our community of talented creators
             </p>
           </section>
 
           <div className="mx-auto max-w-8xl">
             {isLoading && (
               <div className="flex min-h-[400px] items-center justify-center">
-                <CosmicLoader />
+                <div className="text-center">
+                  <CosmicLoader />
+                  <p className="text-muted-foreground mt-4">Loading amazing content...</p>
+                </div>
               </div>
             )}
 
             {error && (
-              <Alert variant="destructive" className="mb-8 bg-red-900/20 border-red-700/50">
-                <AlertDescription className="text-red-200">{error}</AlertDescription>
+              <Alert variant="destructive" className="mb-8 glass-card border-destructive/50">
+                <AlertDescription className="text-center">{error}</AlertDescription>
               </Alert>
             )}
 
@@ -120,10 +127,10 @@ export default function Home() {
             )}
 
             {!isLoading && !error && videos.length === 0 && (
-              <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border border-purple-900/30 bg-black/40 backdrop-blur-sm p-8 text-center">
-                <div className="mb-4 rounded-full bg-purple-900/30 p-4">
+              <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl glass-card p-8 text-center max-w-2xl mx-auto">
+                <div className="mb-6 w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <svg
-                    className="h-8 w-8 text-purple-300"
+                    className="h-10 w-10 text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -136,10 +143,18 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="mb-2 text-xl font-semibold text-purple-200">No Videos Yet</h3>
-                <p className="text-purple-300">
-                  Be the first to share an amazing video with the community!
+                <h3 className="mb-3 text-2xl font-semibold gradient-text">No Videos Yet</h3>
+                <p className="text-muted-foreground mb-6 max-w-md">
+                  Be the first to share amazing content with our community and start the video revolution!
                 </p>
+                <div className="flex gap-4">
+                  <button className="btn-primary px-6 py-3 rounded-lg font-semibold">
+                    Upload First Video
+                  </button>
+                  <button className="btn-secondary px-6 py-3 rounded-lg font-semibold">
+                    Explore Features
+                  </button>
+                </div>
               </div>
             )}
           </div>
