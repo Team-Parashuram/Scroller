@@ -5,7 +5,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { apiClient } from '@/lib/apiClient';
 import CosmicLoader from '@/components/Loader';
 import { IKVideo } from 'imagekitio-next';
-import Header from '@/components/Header';
 
 export default function Home() {
   const [videos, setVideos] = useState<any[]>([]);
